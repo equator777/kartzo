@@ -1,13 +1,12 @@
 plugins = []
 headers = []
-redirects = []
 
 [functions]
 
 [functions."*"]
 
 [build]
-publish = "C:\\Backup_Data\\Enoch\\affiliate-website\\firebsaeauth"
+publish = "C:\\Backup_Data\\Enoch\\affiliate-website\\FirebsaeAuth"
 publishOrigin = "ui"
 
 [build.environment]
@@ -23,3 +22,51 @@ publishOrigin = "ui"
 [build.processing.js]
 
 [build.services]
+
+[[redirects]]
+from = "/#invite_token=:token"
+to = "/signup.html#invite_token=:token"
+status = 200.0
+force = false
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
+
+[[redirects]]
+from = "/#confirmation_token=:token"
+to = "/signup.html#confirmation_token=:token"
+status = 200.0
+force = false
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
+
+[[redirects]]
+from = "/#recovery_token=:token"
+to = "/signup.html#recovery_token=:token"
+status = 200.0
+force = false
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
+
+[[redirects]]
+from = "/admin/callback"
+to = "/admin/index.html"
+status = 200.0
+force = false
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
