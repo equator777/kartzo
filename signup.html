@@ -13,29 +13,46 @@
   </div>
 
   <script>
-    const hash = window.location.hash;
+  const hash = window.location.hash;
 
-    netlifyIdentity.on("init", (user) => {
-      if (hash.includes("confirmation_token")) {
-        const token = hash.split("confirmation_token=")[1];
-        netlifyIdentity.confirm(token)
-          .then(() => {
-            alert("✅ Email confirmed! You can now log in.");
-            window.location.href = "/signup.html";
-          })
-          .catch((err) => {
-            alert("❌ Email confirmation failed.");
-            console.error(err);
-          });
-      }
+  netlifyIdentity.on("init", (user) => {
+    // Email confirmation
+    if (hash.includes("confirmation_token")) {
+      const token = hash.split("confirmation_token=")[1];
+      netlifyIdentity.confirm(token)
+        .then(() => {
+          alert("✅ Email confirmed! You can now log in.");
+          window.location.href = "/signup.html";
+        })
+        .catch((err) => {
+          alert("❌ Email confirmation failed.");
+          console.error(err);
+        });
+    }
 
-      if (hash.includes("recovery_token")) {
-        const token = hash.split("recovery_token=")[1];
-        netlifyIdentity.recover(token, true);
-      }
-    });
+    // Invite handling (NEW)
+    if (hash.includes("invite_token")) {
+      const token = hash.split("invite_token=")[1];
+      netlifyIdentity.acceptInvite(token)
+        .then(() => {
+          alert("🎉 Invite accepted! You can now log in.");
+          window.location.href = "/signup.html";
+        })
+        .catch((err) => {
+          alert("❌ Invite processing failed.");
+          console.error(err);
+        });
+    }
 
-    netlifyIdentity.init();
-  </script>
+    // Password recovery
+    if (hash.includes("recovery_token")) {
+      const token = hash.split("recovery_token=")[1];
+      netlifyIdentity.recover(token, true);
+    }
+  });
+
+  netlifyIdentity.init();
+</script>
+
 </body>
 </html>
