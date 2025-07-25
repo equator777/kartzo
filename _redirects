@@ -1,0 +1,3 @@
+/#invite_token=:token  /signup.html#invite_token=:token  200
+/#confirmation_token=:token  /signup.html#confirmation_token=:token  200
+/#recovery_token=:token  /signup.html#recovery_token=:token  200
