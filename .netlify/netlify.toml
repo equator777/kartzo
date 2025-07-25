@@ -7,7 +7,7 @@ redirects = []
 [functions."*"]
 
 [build]
-publish = "C:\\Backup_Data\\Enoch\\affiliate-website\\FirebsaeAuth"
+publish = "C:\\Backup_Data\\Enoch\\affiliate-website\\firebsaeauth"
 publishOrigin = "ui"
 
 [build.environment]
