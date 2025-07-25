@@ -2,8 +2,7 @@ backend:
   name: github
   repo: equator777/cartzo
   branch: main
-  client_id: Ov23lijddJZfDEy94R8m
-  auth_scope: repo
+  login: false
 
 media_folder: "assets/uploads"
 public_folder: "/assets/uploads"
