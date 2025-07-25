@@ -16,7 +16,6 @@
     const hash = window.location.hash;
 
     netlifyIdentity.on("init", (user) => {
-      // Handle email confirmation
       if (hash.includes("confirmation_token")) {
         const token = hash.split("confirmation_token=")[1];
         netlifyIdentity.confirm(token)
@@ -30,7 +29,6 @@
           });
       }
 
-      // Handle password recovery
       if (hash.includes("recovery_token")) {
         const token = hash.split("recovery_token=")[1];
         netlifyIdentity.recover(token, true);
