@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kartzo Login</title>
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+</head>
+<body>
+  <h2 style="text-align:center; margin-top:2rem;">Admin Login - Kartzo</h2>
+  <div style="display: flex; justify-content: center; margin-top: 2rem;">
+    <button onclick="netlifyIdentity.open()" style="padding: 0.6rem 1.5rem; font-size: 1rem;">Log In / Sign Up</button>
+  </div>
+  <script>
+    netlifyIdentity.init();
+  </script>
+</body>
+</html>
