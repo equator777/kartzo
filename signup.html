@@ -12,15 +12,33 @@
     <button onclick="netlifyIdentity.open()" style="padding: 0.6rem 1.5rem; font-size: 1rem;">Log In / Sign Up</button>
   </div>
   <script>
-  netlifyIdentity.on('init', user => {
     const hash = window.location.hash;
-    if (hash && hash.includes('recovery_token')) {
-      const token = hash.match(/recovery_token=([^&]+)/)[1];
-      netlifyIdentity.recover(token, true); // force recovery dialog
-    }
-  });
 
-  netlifyIdentity.init();
-</script>
+    function openIdentityWidget() {
+      netlifyIdentity.open('login');
+    }
+
+    netlifyIdentity.on('init', user => {
+      if (hash.includes('confirmation_token')) {
+        const token = hash.match(/confirmation_token=([^&]+)/)[1];
+        netlifyIdentity.confirm(token)
+          .then(() => {
+            alert('Email confirmed! You can now log in.');
+            window.location.href = '/signup.html';
+          })
+          .catch(err => {
+            console.error('Confirmation error:', err);
+            alert('Error confirming email.');
+          });
+      }
+
+      if (hash.includes('recovery_token')) {
+        const token = hash.match(/recovery_token=([^&]+)/)[1];
+        netlifyIdentity.recover(token, true);
+      }
+    });
+
+    netlifyIdentity.init();
+  </script>
 </body>
 </html>
