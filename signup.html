@@ -12,6 +12,12 @@
     <button onclick="netlifyIdentity.open()" style="padding: 0.6rem 1.5rem; font-size: 1rem;">Log In / Sign Up</button>
   </div>
   <script>
+    netlifyIdentity.on('init', user => {
+      const hash = window.location.hash;
+      if (hash.includes('recovery_token')) {
+        netlifyIdentity.open('login');
+      }
+    });
     netlifyIdentity.init();
   </script>
 </body>
