@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kartzo</title>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #f1f3f6;
+      color: #333;
+    }
+    .navbar {
+      background-color: #2874f0;
+    }
+    .navbar-brand, .nav-link, .navbar-text {
+      color: white !important;
+    }
+    .navbar-nav .nav-item {
+      margin-right: 15px;
+    }
+    .search-bar {
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .carousel-inner img {
+      width: 100%;
+      max-height: 350px;
+      object-fit: cover;
+    }
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 1rem;
+    }
+    .product-card {
+      background: white;
+      border-radius: 8px;
+      padding: 0.5rem;
+      text-align: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 300px;
+    }
+    .product-card img {
+      width: 100%;
+      height: 120px;
+      object-fit: contain;
+    }
+    .product-title {
+      font-size: 0.9rem;
+      font-weight: bold;
+      margin: 0.5rem 0;
+    }
+    .product-price {
+      color: #388e3c;
+      font-weight: bold;
+    }
+    .buy-btn {
+      background: #fb641b;
+      color: white;
+      padding: 0.4rem 0.6rem;
+      font-size: 0.8rem;
+      border: none;
+      border-radius: 4px;
+      text-decoration: none;
+    }
+    .ad-banner img {
+      width: 100%;
+      max-height: 150px;
+      object-fit: cover;
+      margin: 2rem 0;
+    }
+    .featured-products img {
+      width: 100%;
+      height: 150px;
+      object-fit: contain;
+    }
+    footer {
+      background: #172337;
+      color: white;
+      padding: 2rem 1rem;
+    }
+    .footer-columns {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+    }
+    .footer-columns > div {
+      flex: 1;
+      min-width: 200px;
+      margin: 1rem;
+    }
+    footer h5 {
+      font-size: 1rem;
+    }
+    footer a {
+      color: #ccc;
+      text-decoration: none;
+    }
+    footer ul {
+      list-style: none;
+      padding: 0;
+    }
+    footer ul li {
+      margin-bottom: 0.5rem;
+    }
+    .site-header {
+      display: flex;
+      align-items: center;
+      background-color: #2874f0;
+      padding: 0.5rem 1rem;
+    }
+    .brand-name {
+      color: white;
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const sheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSOGr9ESvCpj4BokEwG5UmKhwrE1Y89b5nHwQg09VuFM-cTBRzHcLgnxGgM3ZZOoFfBMMTKVatWkWOY/pub?output=csv';
+
+
+  Papa.parse(sheetUrl, {
+    download: true,
+    header: true,
+    complete: function(results) {
+      const data = results.data;
+      const grid = document.getElementById('productsGrid');
+      grid.innerHTML = "";
+
+      if (!data.length) {
+        grid.innerHTML = "<p>No products found.</p>";
+        return;
+      }
+
+      data.forEach(function(product) {
+        if (!product.name) return;
+        const card = document.createElement("div");
+        card.className = "product-card";
+
+        const img = document.createElement("img");
+        img.src = product.image;
+        img.alt = "Product Image";
+        img.onerror = function () {
+          this.src = "https://placehold.co/160x120";
+        };
+
+        const title = document.createElement("div");
+        title.className = "product-title";
+        title.textContent = product.name;
+
+        const price = document.createElement("div");
+        price.className = "product-price";
+        price.textContent = product.price;
+
+        const link = document.createElement("a");
+        link.href = product.affiliateLink;
+        link.className = "buy-btn";
+        link.target = "_blank";
+        link.textContent = "Buy Now";
+
+        card.appendChild(img);
+        card.appendChild(title);
+        card.appendChild(price);
+        card.appendChild(link);
+
+        grid.appendChild(card);
+      });
+    }
+  });
+});
+
+
+  </script>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="#">Kartzo</a>
+    <div class="collapse navbar-collapse">
+      <ul class="navbar-nav mr-auto">
+        <ul class="navbar-nav mr-auto">
+        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="#productsGrid">Products</a></li>
+        <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
+        <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container mt-3">
+    <div class="carousel slide" data-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img class="d-block w-100" src="https://images.pexels.com/photos/97077/pexels-photo-97077.jpeg" alt="Slide 1">
+        </div>
+        <div class="carousel-item">
+          <img class="d-block w-100" src="https://images.pexels.com/photos/2760241/pexels-photo-2760241.jpeg" alt="Slide 2">
+        </div>
+        <div class="carousel-item">
+          <img class="d-block w-100" src="https://images.pexels.com/photos/18105/pexels-photo.jpg" alt="Slide 3">
+        </div>
+      </div>
+    </div>
+
+```
+<h3 class="mt-4">Latest Products</h3>
+<div id="productsGrid" class="product-grid">Loading products...</div>
+
+<div class="ad-banner">
+  <img src="https://images.pexels.com/photos/1153369/pexels-photo-1153369.jpeg" alt="Ad Banner">
+</div>
+
+<div class="featured-products">
+  <h2>Featured Products</h2>
+  <div class="row">
+    <div class="col-md-3"><img src="https://images.pexels.com/photos/18105/pexels-photo.jpg" alt="Featured"></div>
+    <div class="col-md-3"><img src="https://images.pexels.com/photos/2760241/pexels-photo-2760241.jpeg" alt="Featured"></div>
+    <div class="col-md-3"><img src="https://images.pexels.com/photos/97077/pexels-photo-97077.jpeg" alt="Featured"></div>
+    <div class="col-md-3"><img src="https://images.pexels.com/photos/1153369/pexels-photo-1153369.jpeg" alt="Featured"></div>
+  </div>
+</div>
+```
+
+  </div>
+
+  <footer>
+    <div class="footer-columns">
+      <div>
+        <h5>Quick Links</h5>
+        <ul>
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">FAQs</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Support</h5>
+        <ul>
+          <li><a href="#">Help Center</a></li>
+          <li><a href="#">Returns</a></li>
+          <li><a href="#">Warranty</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Follow Us</h5>
+        <ul>
+          <li><a href="#">Facebook</a></li>
+          <li><a href="#">Twitter</a></li>
+          <li><a href="#">Instagram</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

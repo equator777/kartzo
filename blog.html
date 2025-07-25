@@ -1,0 +1,92 @@
+/* === blog.html === */
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Blog - Kartzo</title>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .blog-post {
+      border-bottom: 1px solid #ccc;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+    }
+    .blog-post h3 {
+      color: #2874f0;
+    }
+    .blog-post img {
+      max-width: 100%;
+      height: auto;
+      margin: 1rem 0;
+    }
+    .blog-meta {
+      font-size: 0.9rem;
+      color: gray;
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg" style="background-color: #2874f0;">
+    <a class="navbar-brand text-white" href="index.html">Kartzo</a>
+    <div class="collapse navbar-collapse">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item"><a class="nav-link text-white" href="index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link text-white" href="#productsGrid">Products</a></li>
+        <li class="nav-item"><a class="nav-link text-white" href="blog.html">Blog</a></li>
+        <li class="nav-item"><a class="nav-link text-white" href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container mt-4">
+    <h2>Latest Blog Posts</h2>
+    <div id="blogContainer">Loading...</div>
+  </div>
+
+  <footer class="text-white" style="background: #172337; padding: 2rem 1rem; margin-top: 2rem;">
+    <p class="text-center mb-0">© 2025 Kartzo. All rights reserved.</p>
+  </footer>
+
+  <script>
+    fetch('/content/blog')
+      .then(response => response.text())
+      .then(text => {
+        const container = document.getElementById("blogContainer");
+        container.innerHTML = '<p>This site is using Netlify CMS. Blog content will appear here after posts are added.</p>';
+      });
+  </script>
+</body>
+</html>
+
+/* === admin/index.html === */
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Content Manager</title>
+    <script src="https://unpkg.com/netlify-cms@^2.10.0/dist/netlify-cms.js"></script>
+  </head>
+  <body>
+  </body>
+</html>
+
+/* === admin/config.yml === */
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "assets/uploads"
+public_folder: "/assets/uploads"
+
+collections:
+  - name: "blog"
+    label: "Blog"
+    folder: "content/blog"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Publish Date", name: "date", widget: "datetime" }
+      - { label: "Image", name: "image", widget: "image", required: false }
+      - { label: "Body", name: "body", widget: "markdown" }

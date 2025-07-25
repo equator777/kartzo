@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin - Kartzo</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f1f3f6;
+      padding: 2rem;
+    }
+    .form-container {
+      max-width: 600px;
+      margin: auto;
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+    .form-group label {
+      font-weight: bold;
+    }
+    .btn-primary {
+      background-color: #2874f0;
+      border: none;
+    }
+    .alert-success {
+      margin-top: 1rem;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h2>Add New Product</h2>
+    <form id="productForm">
+      <div class="form-group">
+        <label for="productName">Product Name</label>
+        <input type="text" class="form-control" id="productName" required>
+      </div>
+      <div class="form-group">
+        <label for="productPrice">Price</label>
+        <input type="text" class="form-control" id="productPrice" required>
+      </div>
+      <div class="form-group">
+        <label for="productImage">Image URL</label>
+        <input type="text" class="form-control" id="productImage" required>
+      </div>
+      <div class="form-group">
+        <label for="productDescription">Description</label>
+        <textarea class="form-control" id="productDescription" rows="3" required></textarea>
+      </div>
+      <div class="form-group">
+        <label for="productLink">Affiliate Link</label>
+        <input type="text" class="form-control" id="productLink" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Add Product</button>
+    </form>
+    <div class="alert alert-success" id="successMsg">Product added successfully!</div>
+  </div>
+
+  <script>
+    const scriptURL = "YOUR_GOOGLE_APPS_SCRIPT_URL"; // Replace with your actual deployed script URL
+
+    document.getElementById("productForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const data = {
+        name: document.getElementById("productName").value,
+        price: document.getElementById("productPrice").value,
+        image: document.getElementById("productImage").value,
+        description: document.getElementById("productDescription").value,
+        affiliateLink: document.getElementById("productLink").value
+      };
+
+      fetch(scriptURL, {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      })
+      .then(res => res.text())
+      .then(msg => {
+        document.getElementById("successMsg").style.display = 'block';
+        document.getElementById("productForm").reset();
+      })
+      .catch(err => alert("Error: " + err));
+    });
+  </script>
+
+</body>
+</html>
+==============================================================================================
+
+Create Google Apps Script to Accept Form Data
+
+    Open your Sheet → Extensions > Apps Script
+
+    Delete the default code, paste this:
+
+function doPost(e) {
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  var data = JSON.parse(e.postData.contents);
+  sheet.appendRow([data.name, data.price, data.image, data.description, data.affiliateLink]);
+  return ContentService.createTextOutput("Success").setMimeType(ContentService.MimeType.TEXT);
+}
+
+
+Save & name the project (e.g. "ProductAPI")
+
+Click Deploy > Manage deployments → New deployment
+
+    Select Web App
+
+    Execute as: Me
+
+    Who has access: Anyone
+
+    Click Deploy and Authorize
+
+Copy the Web App URL (you’ll need it in admin.html)
+=====================================================================================================
+
+
+
+
+
+https://docs.google.com/spreadsheets/d/1YAi5vwE1uk03Vq1g7UFp25HMK4akXn5b3WHOFUS2X40/edit?usp=sharing
+
+https://docs.google.com/spreadsheets/d/e/2PACX-1vSOGr9ESvCpj4BokEwG5UmKhwrE1Y89b5nHwQg09VuFM-cTBRzHcLgnxGgM3ZZOoFfBMMTKVatWkWOY/pub?output=csv
